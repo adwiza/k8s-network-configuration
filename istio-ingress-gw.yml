@@ -3,13 +3,29 @@ kind: Gateway
 metadata:
   name: istio-default-gateway
   namespace: istio-ingress
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
 spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*.local"
+    - hosts:
+        - "*.local"
+        - "*.me"
+      port:
+        number: 80
+        name: http
+        protocol: HTTP
+      tls:
+        httpsRedirect: false
+    - hosts:
+        - '*.local'
+        - '*.me'
+      port:
+        name: https
+        number: 443
+        protocol: HTTPS
+      tls:
+        credentialName: bookshop.me
+        mode: SIMPLE

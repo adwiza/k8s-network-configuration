@@ -6,6 +6,8 @@ metadata:
 spec:
   hosts:
   - "bookshop.local"
+  - "bookshop.me"
+  - "www.bookshop.me"
   gateways:
   - istio-ingress/istio-default-gateway
   http:
