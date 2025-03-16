@@ -10,8 +10,8 @@ spec:
     istio: ingressgateway
   servers:
     - hosts:
-      - "*.local"
-      - "*.me"
+        - "*.local"
+        - "*.me"
       port:
         number: 80
         name: http
@@ -19,8 +19,8 @@ spec:
     #   tls:
     #     httpsRedirect: false
     # - hosts:
-    #     - '*.local'
-    #     - '*.me'
+    #     - "*.local"
+    #     - "*.me"
     #   port:
     #     name: https
     #     number: 443
@@ -28,3 +28,31 @@ spec:
     #   tls:
     #     credentialName: bookshop.me
     #     mode: SIMPLE
+    - hosts:
+        - "*.local"
+        - "*.me"
+      port:
+        number: 9000
+        name: tcp-9000
+        protocol: TCP
+    - hosts:
+        - "*.local"
+        - "*.me"
+      port:
+        number: 9001
+        name: tcp-9001
+        protocol: TCP
+    - hosts:
+        - "*.local"
+        - "*.me"
+      port:
+        number: 8123
+        name: tcp-8123
+        protocol: TCP
+    - hosts:
+        - "*.local"
+        - "*.me"
+      port:
+        number: 5432
+        name: tcp-5432
+        protocol: TCP

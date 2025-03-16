@@ -16,9 +16,9 @@ spec:
         prefix: /
     route:
     - destination:
-        host: productpage
+        host: nginx-service
         port:
-          number: 9080
+          number: 80
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
