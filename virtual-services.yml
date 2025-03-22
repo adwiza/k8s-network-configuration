@@ -6,7 +6,6 @@ metadata:
 spec:
   hosts:
   - "bookshop.local"
-  - "bookshop.me"
   - "www.bookshop.me"
   gateways:
   - istio-ingress/istio-default-gateway
@@ -16,9 +15,28 @@ spec:
         prefix: /
     route:
     - destination:
-        host: nginx-service
+        host: nginx-service.default
         port:
           number: 80
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: postgres
+spec:
+  hosts:
+  - "bookshop.me"
+  gateways:
+  - istio-ingress/istio-default-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: postgres-service.default
+        port:
+          number: 5432
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
