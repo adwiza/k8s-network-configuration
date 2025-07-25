@@ -28,20 +28,22 @@ spec:
     #   tls:
     #     credentialName: bookshop.me
     #     mode: SIMPLE
-    - hosts:
-        - "*.local"
-        - "*.me"
-      port:
-        number: 9000
-        name: tcp-9000
-        protocol: TCP
-    - hosts:
-        - "*.local"
-        - "*.me"
-      port:
-        number: 9001
-        name: tcp-9001
-        protocol: TCP
+  # TCP routes need to be defined separately under the Gateway
+  tcp:
+    - match:
+        - port: 9000
+      route:
+        - destination:
+            host: your-service-name
+            port:
+              number: 9000
+    - match:
+        - port: 9001
+      route:
+        - destination:
+            host: your-service-name
+            port:
+              number: 9001
     - hosts:
         - "*.local"
         - "*.me"
