@@ -1,60 +1,26 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: istio-default-gateway
   namespace: istio-ingress
   annotations:
     kubernetes.io/tls-acme: "true"
+    metallb.io/address-pool: local
 spec:
   selector:
     istio: ingressgateway
   servers:
-    - hosts:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+      - "*.local"
+      - "*.me"
+  - port:
+      number: 9001
+      name: tcp-9001
+      protocol: TCP
+    hosts:
         - "*.local"
         - "*.me"
-      port:
-        number: 80
-        name: http
-        protocol: HTTP
-    #   tls:
-    #     httpsRedirect: false
-    # - hosts:
-    #     - "*.local"
-    #     - "*.me"
-    #   port:
-    #     name: https
-    #     number: 443
-    #     protocol: HTTPS
-    #   tls:
-    #     credentialName: bookshop.me
-    #     mode: SIMPLE
-  # TCP routes need to be defined separately under the Gateway
-  tcp:
-    - match:
-        - port: 9000
-      route:
-        - destination:
-            host: your-service-name
-            port:
-              number: 9000
-    - match:
-        - port: 9001
-      route:
-        - destination:
-            host: your-service-name
-            port:
-              number: 9001
-    - hosts:
-        - "*.local"
-        - "*.me"
-      port:
-        number: 8123
-        name: tcp-8123
-        protocol: TCP
-    - hosts:
-        - "*.local"
-        - "*.me"
-      port:
-        number: 5432
-        name: tcp-5432
-        protocol: TCP
