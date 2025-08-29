@@ -4,7 +4,6 @@ metadata:
   name: istio-default-gateway
   namespace: istio-ingress
   annotations:
-    kubernetes.io/tls-acme: "true"
     metallb.io/address-pool: local
 spec:
   selector:

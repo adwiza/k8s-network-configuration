@@ -37,7 +37,7 @@ spec:
         host: longhorn-frontend
         port:
           number: 80
----
+# ---
 # apiVersion: networking.istio.io/v1alpha3
 # kind: VirtualService
 # metadata:
@@ -56,37 +56,37 @@ spec:
 #         host: postgres-service.default
 #         port:
 #           number: 5432
+---
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: minio-external
+spec:
+  hosts:
+    - minio.local
+  location: MESH_EXTERNAL
+  ports:
+    - number: 9001
+      name: http
+      protocol: HTTP
+  resolution: NONE
+# ---
 # apiVersion: networking.istio.io/v1alpha3
-# kind: ServiceEntry
+# kind: VirtualService
 # metadata:
-#   name: minio-external
+#   name: minio-local
 #   namespace: default
 # spec:
 #   hosts:
-#     - minio.local
-#   location: MESH_EXTERNAL
-#   ports:
-#     - number: 9001
-#       name: http
-#       protocol: HTTP
-#   resolution: DNS
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: minio-local
-  namespace: default
-spec:
-  hosts:
-    - "minio.local"
-  gateways:
-    - istio-ingress/istio-default-gateway
-  http:
-    - match:
-        - uri:
-            prefix: /
-      route:
-        - destination:
-            host: minio.local
-            port:
-              number: 9001
+#     - "minio.local"
+#   gateways:
+#     - istio-ingress/istio-default-gateway
+#   http:
+#     - match:
+#         - uri:
+#             prefix: /
+#       route:
+#         - destination:
+#             host: minio.local
+#             port:
+#               number: 9001
