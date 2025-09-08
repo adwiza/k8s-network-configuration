@@ -3,8 +3,9 @@ kind: Gateway
 metadata:
   name: istio-default-gateway
   namespace: istio-ingress
-  annotations:
-    metallb.io/address-pool: local
+  # annotations:
+    # metallb.io/address-pool: local
+    # loadBalancerIP: 192.168.3.12
 spec:
   selector:
     istio: ingressgateway
