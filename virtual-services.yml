@@ -66,6 +66,7 @@ metadata:
 spec:
   hosts:
   - minio.local
+  - minio-console.local
   addresses:
   - 192.168.3.13/32
   ports:
@@ -86,7 +87,28 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: external-minio
+  name: minio-console
+  namespace: default
+spec:
+  hosts:
+  - "minio-console.local"
+  gateways:
+  - istio-ingress/istio-default-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: minio-console.local
+        port:
+          number: 9001
+    timeout: 30s
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: minio-api
   namespace: default
 spec:
   hosts:
@@ -100,48 +122,6 @@ spec:
     route:
     - destination:
         host: minio.local
-        port:
-          number: 9001
-    timeout: 30s
----
-apiVersion: networking.istio.io/v1beta1
-kind: ServiceEntry
-metadata:
-  name: minio-api
-  namespace: default
-spec:
-  hosts:
-  - minio-api.local
-  addresses:
-  - 192.168.3.13/32
-  ports:
-  - number: 9000
-    name: http
-    protocol: HTTP
-  resolution: STATIC
-  location: MESH_EXTERNAL
-  endpoints:
-  - address: 192.168.3.13
-    ports:
-      http: 9000
----
-apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: minio-api
-  namespace: default
-spec:
-  hosts:
-  - "minio-api.local"
-  gateways:
-  - istio-ingress/istio-default-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /
-    route:
-    - destination:
-        host: minio-api.local
         port:
           number: 9000
 # ---
