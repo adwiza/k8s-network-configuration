@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  haproxy:
+    image: haproxy:2.9
+    container_name: custom-haproxy
+    ports:
+      - "6443:6443"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - haproxy-run:/run/haproxy
+    tmpfs:
+      - /run
+    restart: unless-stopped
+
+volumes:
+  haproxy-run:

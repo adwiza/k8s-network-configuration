@@ -3,9 +3,9 @@ kind: Gateway
 metadata:
   name: istio-default-gateway
   namespace: istio-ingress
-  # annotations:
+  annotations: {}
     # metallb.io/address-pool: local
-    # loadBalancerIP: 192.168.3.12
+    # metallb.io/loadBalancerIPs: 192.168.3.12
 spec:
   selector:
     istio: ingressgateway
@@ -17,10 +17,10 @@ spec:
     hosts:
       - "*.local"
       - "*.me"
-  - port:
-      number: 9001
-      name: tcp-9001
-      protocol: TCP
-    hosts:
-        - "*.local"
-        - "*.me"
+  # - port:
+  #     number: 9001
+  #     name: tcp-9001
+  #     protocol: TCP
+  #   hosts:
+  #       - "*.local"
+  #       - "*.me"
