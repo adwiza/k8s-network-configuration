@@ -68,6 +68,11 @@ _internal_defaults_do_not_set:
       port: 9001
       targetPort: 9001
       nodePort: 31524
+    - name: tcp-postgres
+      port: 5432
+      targetPort: 5432
+      nodePort: 32600
+      protocol: TCP      
     annotations: {}
     loadBalancerIP: ""
     loadBalancerSourceRanges: []

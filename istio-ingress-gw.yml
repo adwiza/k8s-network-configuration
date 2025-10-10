@@ -17,6 +17,12 @@ spec:
     hosts:
       - "*.local"
       - "*.me"
+  - port:
+      number: 5432
+      name: tcp-postgres
+      protocol: TCP
+    hosts:
+      - "postgres.local"
   # - port:
   #     number: 9001
   #     name: tcp-9001
