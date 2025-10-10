@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-ingress
+  labels:
+    app: istio-ingressgateway
+    app.kubernetes.io/instance: istio-ingressgateway
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-ingressgateway
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.27.1
+    helm.sh/chart: gateway-1.27.1
+    istio: ingressgateway
+spec:
+  type: NodePort
+  selector:
+    app: istio-ingressgateway
+    istio: ingressgateway
+  ports:
+    - name: status-port
+      protocol: TCP
+      port: 15021
+      targetPort: 15021
+      nodePort: 32249
+    - name: http2
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 32550
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+      nodePort: 32580
+    - name: minio-api
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
+      nodePort: 31523
+    - name: minio-ui
+      protocol: TCP
+      port: 9001
+      targetPort: 9001
+      nodePort: 31524
+  sessionAffinity: None
+  internalTrafficPolicy: Cluster
+  externalTrafficPolicy: Cluster
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+    - IPv4
