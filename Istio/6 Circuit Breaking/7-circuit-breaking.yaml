@@ -1,0 +1,26 @@
+# apiVersion: networking.istio.io/v1
+# kind: DestinationRule
+# metadata:
+#   name: circuit-breaker-for-staff-service
+#   namespace: default
+# spec:
+#   host: fleetman-staff-service.default.svc.cluster.local
+#   trafficPolicy:
+#     outlierDetection: # Circuit Breakers HAVE TO BE SWITCHED ON
+#       consecutive5xxErrors: 2
+#       interval: 10s
+#       baseEjectionTime: 30s
+#       maxEjectionPercent: 50
+---      
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: circuit-breaker-for-the-entire-default-namespace
+  namespace: default
+spec:
+  host: "*.default.svc.cluster.local"
+  trafficPolicy:
+    outlierDetection: # Circuit Breakers HAVE TO BE SWITCHED ON
+      consecutiveGatewayErrors: 1
+      interval: 5s
+      maxEjectionPercent: 100

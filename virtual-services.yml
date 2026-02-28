@@ -68,7 +68,7 @@ spec:
   - minio.local
   - minio-console.local
   addresses:
-  - 192.168.3.13/32
+  - 192.168.3.113/32
   ports:
   - number: 9000
     name: minio-api
@@ -78,7 +78,7 @@ spec:
     protocol: HTTP
   resolution: STATIC
   endpoints:
-  - address: 192.168.3.13
+  - address: 192.168.3.113
     ports:
       minio-api: 9000
       minio-console: 9001
