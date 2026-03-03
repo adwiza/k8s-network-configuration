@@ -107,9 +107,9 @@ statefulset:
       nexusDBPort: 5432
       install4jAddVmParams: "-Xms2703m -Xmx2703m"
       jdbcUrlParams: null # Must start with a '?' e.g. "?foo=bar&baz=foo"
-      zeroDowntimeEnabled: false
+      zeroDowntimeEnabled: false      
     additionalEnv:
-      null
+      null     
       # -- Uncomment these when using secret.existingDbSecret.enabled = true
       # - name: DB_NAME
       #   valueFrom:
@@ -372,16 +372,32 @@ nexus:
   extraLabels: {}
   extraSelectorLabels: {}
   docker:
-    enabled: false
+    enabled: enable
     type: ClusterIP
     protocol: TCP
-  # registries:
-  #   - host: chart.local
-  #     port: 5000
+  registries:
+    - host: dockerhub.local
+      port: 5000
   #     secretName: registry-secret
-  #     targetPort: 8081
+      targetPort: 8081
   #     annotations: {}
-
+        # registries:
+        #   - host: ${hub_host}
+        #     port: 5000
+        #     secretName: zvq.me
+        #     targetPort: 5000
+        #   - host: ${registry_host}
+        #     port: 5001
+        #     secretName: zvq.me
+        #     targetPort: 5001
+        #   - host: ${docker_host}
+        #     port: 5002
+        #     secretName: zvq.me
+        #     targetPort: 5002
+        #   - host: ${registry_public_host}
+        #     port: 5003
+        #     secretName: zvq.me
+        #     targetPort: 5003
 # Enable configmap and add arbitrary data in configmap
 config:
   enabled: false
