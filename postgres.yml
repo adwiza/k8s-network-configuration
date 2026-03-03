@@ -18,7 +18,7 @@ metadata:
   namespace: postgres      
 type: Opaque
 stringData:
-  POSTGRES_PASSWORD: "my_password"
+  POSTGRES_PASSWORD: "mypassword"
 ---
 apiVersion: apps/v1
 kind: Deployment

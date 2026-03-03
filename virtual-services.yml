@@ -160,6 +160,6 @@ spec:
             prefix: /
       route:
         - destination:
-            host: nexus
+            host: nexus-nxrm-ha-hl
             port:
               number: 8081
