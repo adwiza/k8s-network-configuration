@@ -375,11 +375,11 @@ nexus:
     enabled: enable
     type: ClusterIP
     protocol: TCP
-  registries:
-    - host: dockerhub.local
-      port: 5000
-  #     secretName: registry-secret
-      targetPort: 8081
+    registries:
+      - host: dockerhub.local
+        port: 5000
+    #     secretName: registry-secret
+        targetPort: 8081
   #     annotations: {}
         # registries:
         #   - host: ${hub_host}
