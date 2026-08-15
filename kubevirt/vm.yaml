@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: testvm-disk
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: testvm
+spec:
+  runStrategy: Always
+  template:
+    metadata:
+      labels:
+        kubevirt.io/size: small
+        kubevirt.io/domain: testvm
+    spec:
+      domain:   
+        devices:
+          disks:
+            - name: disk
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          interfaces:
+            - name: default
+              masquerade: {}
+        resources:
+          requests:
+            memory: 64M
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: disk
+          persistentVolumeClaim:
+            claimName: testvm-disk
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userDataBase64: SGkuXG4=
